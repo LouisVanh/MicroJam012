@@ -12,12 +12,9 @@ public class PlayerCamera : MonoBehaviour
     private float yRotation;
 
     [SerializeField] private Transform _playerOrientation;
-    [SerializeField] private Transform _player;
-
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -34,7 +31,7 @@ public class PlayerCamera : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         MoveCamera();
-        _playerOrientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        _playerOrientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
     private void MoveCamera()
