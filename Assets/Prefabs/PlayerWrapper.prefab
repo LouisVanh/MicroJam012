@@ -700,7 +700,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8802388795418265120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -791,6 +791,7 @@ MonoBehaviour:
   state: 0
   sliding: 0
   wallrunning: 0
+  winInfo: {fileID: 0}
 --- !u!54 &8351561857055253749
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -857,7 +858,7 @@ MonoBehaviour:
   wallRunForce: 200
   wallJumpUpForce: 15
   wallJumpSideForce: 20
-  wallClimbSpeed: 3
+  wallClimbSpeed: 5
   maxWallRunTime: 999
   jumpKey: 32
   upwardsRunKey: 304
