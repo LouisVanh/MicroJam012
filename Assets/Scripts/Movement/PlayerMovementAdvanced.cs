@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovementAdvanced : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
     public float slideSpeed;
-
-    private float desiredMoveSpeed;
-    private float lastDesiredMoveSpeed;
+    public float wallrunSpeed;
 
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
@@ -24,6 +25,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float airMultiplier;
     bool readyToJump;
 
+    //[Header("Crouching")]
+    //public float crouchSpeed;
+    //public float crouchYScale;
+    //private float startYScale;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -39,7 +44,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope;
-    
+
 
     public Transform orientation;
 
@@ -55,12 +60,18 @@ public class PlayerMovementAdvanced : MonoBehaviour
     {
         walking,
         sprinting,
-        crouching,
+        wallrunning,
+        //crouching,
         sliding,
         air
     }
 
     public bool sliding;
+    //public bool crouching;
+    public bool wallrunning;
+
+    //public TextMeshProUGUI text_speed;
+    //public TextMeshProUGUI text_mode;
 
     private void Start()
     {
@@ -99,7 +110,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
 
@@ -109,26 +120,38 @@ public class PlayerMovementAdvanced : MonoBehaviour
         }
 
         //// start crouch
-        //if (Input.GetKeyDown(crouchKey))
+        //if (Input.GetKeyDown(crouchKey) && horizontalInput == 0 && verticalInput == 0)
         //{
         //    transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
         //    rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+
+        //    crouching = true;
         //}
 
         //// stop crouch
         //if (Input.GetKeyUp(crouchKey))
         //{
         //    transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+
+        //    crouching = false;
         //}
     }
 
     private void StateHandler()
     {
+        // Mode - Wallrunning
+        if (wallrunning)
+        {
+            state = MovementState.wallrunning;
+            desiredMoveSpeed = wallrunSpeed;
+        }
+
         // Mode - Sliding
-        if (sliding)
+        else if (sliding)
         {
             state = MovementState.sliding;
 
+            // increase speed by one every second
             if (OnSlope() && rb.velocity.y < 0.1f)
                 desiredMoveSpeed = slideSpeed;
 
@@ -136,15 +159,15 @@ public class PlayerMovementAdvanced : MonoBehaviour
                 desiredMoveSpeed = sprintSpeed;
         }
 
-        //// Mode - Crouching
-        //else if (Input.GetKey(crouchKey))
+        // Mode - Crouching
+        //else if (crouching)
         //{
         //    state = MovementState.crouching;
         //    desiredMoveSpeed = crouchSpeed;
         //}
 
         // Mode - Sprinting
-        else if(grounded && Input.GetKey(sprintKey))
+        else if (grounded && Input.GetKey(sprintKey))
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
@@ -163,11 +186,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
             state = MovementState.air;
         }
 
-        // check if desiredMoveSpeed has changed drastically
-        if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+        // check if desired move speed has changed drastically
+        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
         {
             StopAllCoroutines();
             StartCoroutine(SmoothlyLerpMoveSpeed());
+
+            print("Lerp Started!");
         }
         else
         {
@@ -219,15 +244,15 @@ public class PlayerMovementAdvanced : MonoBehaviour
         }
 
         // on ground
-        else if(grounded)
+        else if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
         // in air
-        else if(!grounded)
+        else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
         // turn gravity off while on slope
-        rb.useGravity = !OnSlope();
+        if(!wallrunning) rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()
@@ -271,7 +296,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     public bool OnSlope()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
@@ -283,5 +308,24 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+    }
+
+    private void TextStuff()
+    {
+        //Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        //if (OnSlope())
+        //    text_speed.SetText("Speed: " + Round(rb.velocity.magnitude, 1));
+
+        //else
+        //    text_speed.SetText("Speed: " + Round(flatVel.magnitude, 1));
+
+        //text_mode.SetText(state.ToString());
+    }
+
+    public static float Round(float value, int digits)
+    {
+        float mult = Mathf.Pow(10.0f, (float)digits);
+        return Mathf.Round(value * mult) / mult;
     }
 }
