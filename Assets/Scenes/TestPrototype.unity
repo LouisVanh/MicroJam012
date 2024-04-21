@@ -472,7 +472,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -1373,7 +1373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 1266135391}
   playerObj: {fileID: 1640746819}
-  maxSlideTime: 2
+  maxSlideTime: 3
   slideForce: 200
   slideYScale: 0.4
   slideKey: 306
@@ -1396,10 +1396,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wallRunForce: 200
-  wallJumpUpForce: 7
-  wallJumpSideForce: 14
-  wallClimbSpeed: 1.5
-  maxWallRunTime: 4
+  wallJumpUpForce: 15
+  wallJumpSideForce: 20
+  wallClimbSpeed: 3
+  maxWallRunTime: 999
   jumpKey: 32
   upwardsRunKey: 304
   downwardsRunKey: 306
@@ -1423,13 +1423,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 7
-  sprintSpeed: 10
+  sprintSpeed: 15
   slideSpeed: 30
   wallrunSpeed: 8.5
-  speedIncreaseMultiplier: 1.5
-  slopeIncreaseMultiplier: 2.5
+  speedIncreaseMultiplier: 50
+  slopeIncreaseMultiplier: 3
   groundDrag: 4
-  jumpForce: 12
+  jumpForce: 15
   jumpCooldown: 0.25
   airMultiplier: 0.4
   jumpKey: 32
