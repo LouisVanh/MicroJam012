@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class testingTheCold : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class testingTheCold : MonoBehaviour
 
     public void tooCold()
     {
-        // death function idk if you want it in here tho 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnTriggerEnter(Collider other)
