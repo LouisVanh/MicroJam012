@@ -8,7 +8,7 @@ public class testingTheCold : MonoBehaviour
 {
     public float maxWarmth = 1f; //starting warmth
     private float currentWarmth; // how much you got left
-    float howColdItIs = 0.2f;      // how much it lowers by
+    [SerializeField] private float howColdItIs = 0.2f;      // how much it lowers by
     public float healAmount;     // how much warmth you get back id just set it to 1
     public Image warmthImage;    // the picture you want to fade on to the screen
     public Image powerUpImage; 

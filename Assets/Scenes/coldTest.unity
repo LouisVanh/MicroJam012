@@ -551,6 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxWarmth: 1
+  howColdItIs: 0.01
   healAmount: 1
   warmthImage: {fileID: 1254759523}
   powerUpImage: {fileID: 1579844634}
