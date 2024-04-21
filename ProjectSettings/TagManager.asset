@@ -10,7 +10,7 @@ TagManager:
   - Warmth
   - Warmth2
   - Checkpoint
-  - kill
+  - Kill
   layers:
   - Default
   - TransparentFX
