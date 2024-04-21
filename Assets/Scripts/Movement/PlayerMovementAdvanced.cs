@@ -70,21 +70,24 @@ public class PlayerMovementAdvanced : MonoBehaviour
     //public bool crouching;
     public bool wallrunning;
 
-    //public TextMeshProUGUI text_speed;
-    //public TextMeshProUGUI text_mode;
-
+    public WinTheGame winInfo;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         readyToJump = true;
-
+        winInfo = GameObject.Find("WinTrigger").GetComponent<WinTheGame>();
         //startYScale = transform.localScale.y;
     }
 
     private void Update()
     {
+        if (winInfo.GameOverWin)
+        {
+            Time.timeScale = 0; // dont allow movement when ya win the game
+            return;
+        }
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
