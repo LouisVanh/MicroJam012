@@ -68,6 +68,7 @@ public class testingTheCold : MonoBehaviour
         if (other.CompareTag("Warmth2"))
         {
             Heal2();
+            Destroy(other.gameObject);
         }
     }
 }
