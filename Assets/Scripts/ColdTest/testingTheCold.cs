@@ -7,19 +7,36 @@ public class testingTheCold : MonoBehaviour
 {
     public float maxWarmth = 1f; //starting warmth
     private float currentWarmth; // how much you got left
-    public float howColdItIs;    // how much it lowers by
+    float howColdItIs = 1f;      // how much it lowers by
     public float healAmount;     // how much warmth you get back id just set it to 1
-    public Image warmthImage;    // the picture you want to fade on to the screen
+    public Image warmthImage;
+    public Image powerUpImage;  // the picture you want to fade on to the screen
 
     private void Start()
     {
-        currentWarmth = maxWarmth;       
+        currentWarmth = maxWarmth;
+        powerUpImage.enabled = false;
     }
        
     public void Heal()
     {
-        currentWarmth += healAmount;
-        currentWarmth = Mathf.Clamp(currentWarmth, 0f, maxWarmth);      
+        currentWarmth = healAmount;
+        currentWarmth = Mathf.Clamp(currentWarmth, 0f, maxWarmth);
+        
+    }
+
+    public void Heal2()
+    {
+        howColdItIs = 0f;
+        currentWarmth = 1f;
+        Invoke("coldReset", 10);
+        powerUpImage.enabled = true;
+    }
+
+    public void coldReset()
+    {
+        howColdItIs = 1f;
+        powerUpImage.enabled = false;
     }
 
     private void Update() // its in the name
@@ -46,6 +63,11 @@ public class testingTheCold : MonoBehaviour
         if (other.CompareTag("Warmth"))
         {
             Heal();           
+        }
+
+        if (other.CompareTag("Warmth2"))
+        {
+            Heal2();
         }
     }
 }
