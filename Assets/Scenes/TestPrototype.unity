@@ -1409,7 +1409,7 @@ MonoBehaviour:
   useGravity: 1
   gravityCounterForce: 20
   orientation: {fileID: 1266135391}
-  cam: {fileID: 0}
+  cam: {fileID: 330585548}
 --- !u!114 &1640746828
 MonoBehaviour:
   m_ObjectHideFlags: 0
