@@ -7,10 +7,10 @@ public class testingTheCold : MonoBehaviour
 {
     public float maxWarmth = 1f; //starting warmth
     private float currentWarmth; // how much you got left
-    float howColdItIs = 1f;      // how much it lowers by
+    float howColdItIs = 0.2f;      // how much it lowers by
     public float healAmount;     // how much warmth you get back id just set it to 1
-    public Image warmthImage;
-    public Image powerUpImage;  // the picture you want to fade on to the screen
+    public Image warmthImage;    // the picture you want to fade on to the screen
+    public Image powerUpImage; 
 
     private void Start()
     {
@@ -28,7 +28,6 @@ public class testingTheCold : MonoBehaviour
     public void Heal2()
     {
         howColdItIs = 0f;
-        currentWarmth = 1f;
         Invoke("coldReset", 10);
         powerUpImage.enabled = true;
     }
