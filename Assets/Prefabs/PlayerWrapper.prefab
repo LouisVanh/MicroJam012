@@ -772,14 +772,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 7
   sprintSpeed: 15
-  slideSpeed: 30
-  wallrunSpeed: 8.5
+  slideSpeed: 25
+  wallrunSpeed: 10
   speedIncreaseMultiplier: 50
   slopeIncreaseMultiplier: 3
   groundDrag: 4
-  jumpForce: 15
+  jumpForce: 20
   jumpCooldown: 0.25
-  airMultiplier: 0.4
+  airMultiplier: 1.1
   jumpKey: 32
   sprintKey: 304
   playerHeight: 2
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {fileID: 6691966395205502784}
   playerObj: {fileID: 2066177996486753046}
-  maxSlideTime: 3
+  maxSlideTime: 2.5
   slideForce: 200
   slideYScale: 0.4
   slideKey: 306
@@ -863,7 +863,7 @@ MonoBehaviour:
   jumpKey: 32
   upwardsRunKey: 304
   downwardsRunKey: 306
-  wallCheckDistance: 0.7
+  wallCheckDistance: 1
   minJumpHeight: 2
   exitWallTime: 0.2
   useGravity: 1
