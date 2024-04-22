@@ -11,13 +11,13 @@ public class testingTheCold : MonoBehaviour
     [SerializeField] private float howColdItIs;   // how much it lowers by
     public float healAmount;     // how much warmth you get back id just set it to 1
     public Image warmthImage;    // the picture you want to fade on to the screen
-    public Image powerUpImage;
+    //public Image powerUpImage;
     private bool _healing;
 
     private void Start()
     {
         currentWarmth = maxWarmth;
-        powerUpImage.enabled = false;
+        //powerUpImage.enabled = false;
     }
        
     public void Heal()
@@ -27,18 +27,18 @@ public class testingTheCold : MonoBehaviour
         
     }
 
-    public void Heal2()
-    {
-        howColdItIs = 0f;
-        Invoke("coldReset", 10);
-        powerUpImage.enabled = true;
-    }
+    //public void Heal2()
+    //{
+    //    howColdItIs = 0f;
+    //    Invoke("coldReset", 10);
+    //    powerUpImage.enabled = true;
+    //}
 
-    public void coldReset()
-    {
-        howColdItIs = 1f;
-        powerUpImage.enabled = false;
-    }
+    //public void coldReset()
+    //{
+    //    howColdItIs = 1f;
+    //    powerUpImage.enabled = false;
+    //}
 
     private void Update() // its in the name
     {
@@ -71,11 +71,11 @@ public class testingTheCold : MonoBehaviour
             _healing = true;          
         }
 
-        if (other.CompareTag("Warmth2"))
-        {
-            Heal2();
-            Destroy(other.gameObject);
-        }
+        //if (other.CompareTag("Warmth2"))
+        //{
+        //    Heal2();
+        //    Destroy(other.gameObject);
+        //}
     }
 
     private void OnTriggerExit(Collider other)

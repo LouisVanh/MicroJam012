@@ -79,6 +79,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         readyToJump = true;
         winInfo = GameObject.Find("WinTrigger").GetComponent<WinTheGame>();
         //startYScale = transform.localScale.y;
@@ -294,7 +296,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         _lastGroundedTime = null;
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
+        this.gameObject.GetComponent<AudioSource>().Play();
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
     private void TryToJump()
