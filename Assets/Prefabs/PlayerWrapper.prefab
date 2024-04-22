@@ -792,6 +792,7 @@ MonoBehaviour:
   sliding: 0
   wallrunning: 0
   winInfo: {fileID: 0}
+  _coyoteTimeMargin: 0.5
 --- !u!54 &8351561857055253749
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -71,6 +71,9 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public bool wallrunning;
 
     public WinTheGame winInfo;
+    private float? _lastGroundedTime;
+    [SerializeField] private float _coyoteTimeMargin;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -88,8 +91,12 @@ public class PlayerMovementAdvanced : MonoBehaviour
             Time.timeScale = 0; // dont allow movement when ya win the game
             return;
         }
-        // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+            // ground check
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        if (grounded)
+        {
+            _lastGroundedTime = Time.time;
+        }
 
         MyInput();
         SpeedControl();
@@ -113,11 +120,11 @@ public class PlayerMovementAdvanced : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump)
         {
             readyToJump = false;
 
-            Jump();
+            TryToJump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
@@ -284,11 +291,23 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void Jump()
     {
         exitingSlope = true;
-
+        _lastGroundedTime = null;
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+    private void TryToJump()
+    {
+        if (grounded) Jump();
+        else
+        {
+            float? timeSinceGrounded = Time.time - _lastGroundedTime;
+            if (timeSinceGrounded <= _coyoteTimeMargin) // if player has just barely slipped off of a ledge
+            {
+                Jump();
+            }
+        }
     }
     private void ResetJump()
     {
